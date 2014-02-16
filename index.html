@@ -1,0 +1,218 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/jquery.filemanager.js"></script>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+		<style>
+			.navbar {
+				font-size: 18px;
+			}
+
+			#uploader {
+				width: 800px;
+				height: 437px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-top: -220px;
+				margin-left: -400px;
+				display: none;
+			}
+
+			#file-body {
+				margin-top: 3px;
+				height: 301px;
+			}
+
+			#file-body div {
+				height: 300px;
+			}
+
+			#panel-sidebar {
+				border-right-width: 3px;
+				border-right-color: #ddd;
+				border-right-style: none;
+			}
+
+			#items {
+				padding: 15px;
+				padding-right: 5px;
+				width: 100%;
+				height: 290px;
+				vertical-align: top;
+			}
+
+			#items li {
+				display: inline-block;
+				width: 170px;
+				margin-right: 10px;
+				height: 130px;
+				margin-bottom: 10px;
+				overflow: hidden;
+				text-align: center;
+			}
+
+			.icon {
+				height: 120px;
+				width: 160px !important;
+				font-size: 76pt;
+				text-align: center;
+				line-height: 130px;
+				vertical-align: middle;
+			}
+
+			.icon:before {
+				position: relative;
+				top: -10px;
+				left: -10px;
+			}
+
+			#items li img {
+				max-width: 160px;
+				height: 120px;
+			}
+
+			.title {
+				background-color: #000000;
+				color: #FFFFFF;
+				width: 169px;
+				padding-left: 5px;
+				height: 20px;
+				margin-top: -20px;
+				margin-left: -4px;
+				display: block;
+				opacity: 0.90;
+				padding-right: 5px;
+				text-align: left;
+			}
+
+			.title input {
+				position: relative;
+			}
+
+			#details span {
+				margin-right: 5px;
+			}
+
+			#details tr td:first-child, #details tr th:first-child {
+				text-align: center; /* center checkbox horizontally */
+				vertical-align: middle;
+			}
+
+			.close {
+				margin-top: -3px;
+			}
+
+			.no-padding {
+				padding: 0px !important;
+			}
+
+			.no-radius {
+				border-radius: 0px !important;
+			}
+
+			.no-border-sides {
+				border-left: 0px;
+				border-right: 0px;
+			}
+
+			.no-borders {
+				border: 0px;
+			}
+
+			.no-margin {
+				margin: 0px;
+			}
+
+			.scroll {
+				overflow: auto;
+			}
+
+			a.folder {
+				cursor: pointer;
+			}
+
+			.dialog {
+				width: 300px;
+				height: 155px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -150px;
+				margin-top: -75px;
+				display: none;
+			}
+
+			#uploadbox {
+				z-index: 99999;
+				width: 600px;
+				height: 300px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -300px;
+				margin-top: -150px;
+				display: none;
+			}
+
+			#uploadzone {
+				border: 3px dashed #CCCCCC;
+				height: 179px;
+			}
+
+			#uploadzone.hover {
+				border: 3px dashed #B92C28;
+			}
+
+			#uploadzone.hover h4 {
+				color: #B92C28;
+			}
+
+			#uploadzone table {
+				width: 100%;
+				display: block;
+				height: 209px;
+				margin: 0px;
+			}
+
+			#uploadzone h4 {
+				line-height: 176px;
+				vertical-align: middle;
+				text-align: center;
+				color: #CCCCCC;
+			}
+
+			.dialog input, #uploadbox input {
+				width: 185px;
+				margin-left: 20px;
+			}
+
+			.dialog a, #uploadbox a {
+				margin-left: 5px;
+			}
+
+			.cname {
+				width: 60%;
+			}
+			.csize {
+				width: 15%;
+			}
+			.cprogress {
+				width: 25%;
+			}
+		</style>
+		<script type="text/javascript">
+			$(function() {
+				$('#uploader').filemanager();
+			})
+		</script>
+	</head>
+	<body>
+		<div id="uploader"></div>
+	</body>
+</html>

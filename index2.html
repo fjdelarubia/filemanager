@@ -1,0 +1,502 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<!-- <script type="text/javascript" src="js/jquery.filemanager.js"></script> -->
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+		<style>
+			.navbar {
+				font-size: 18px;
+			}
+
+			#uploader {
+				width: 800px;
+				height: 400px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-top: -200px;
+				margin-left: -400px;
+			}
+
+			#file-body {
+				margin-top: 3px;
+				height: 301px;
+			}
+
+			#file-body div {
+				height: 304px;
+			}
+
+			#panel-sidebar {
+				border-right-width: 3px;
+				border-right-color: #ddd;
+				border-right-style: none;
+			}
+
+			#items {
+				padding: 15px;
+				padding-right: 5px;
+				width: 100%;
+				height: 290px;
+			}
+
+			#items li {
+				display: inline-block;
+				width: 170px;
+				margin-right: 10px;
+				height: 140px;
+				margin-bottom: 10px;
+			}
+
+			#details span {
+				margin-right: 5px;
+			}
+
+			#details tr td:first-child, #details tr th:first-child {
+				text-align: center; /* center checkbox horizontally */
+				vertical-align: middle;
+			}
+
+			.close {
+				margin-top: -3px;
+			}
+
+			.no-padding {
+				padding: 0px !important;
+			}
+
+			.no-radius {
+				border-radius: 0px !important;
+			}
+
+			.no-border-sides {
+				border-left: 0px;
+				border-right: 0px;			}
+
+			.no-borders {
+				border: 0px;
+			}
+
+			.no-margin {
+				margin: 0px;
+			}
+
+			.scroll {
+				overflow: auto;
+			}
+
+			.title {
+				background-color: #000000;
+				color: #FFFFFF;
+				width: 160px;
+				padding-left: 5px;
+				height: 20px;
+				margin-top: -24px;
+				margin-left: 5px;
+				display: block;
+				opacity: 0.90;
+				padding-right: 5px;
+			}
+
+			#renamebox {
+				width: 300px;
+				height: 155px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -150px;
+				margin-top: -75px;
+				display: none;
+			}
+
+			#mkdir {
+				display: none;
+			}
+			
+			#uploadbox {
+				width: 400px;
+				height: 300px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -200px;
+				margin-top: -150px;
+			}
+		
+			#renamebox input {
+				width: 185px;
+				margin-left: 20px;
+			}
+
+			#renamebox a {
+				margin-left: 5px;
+			}
+			
+			.icon {
+				height: 130px;
+				width: 170px !important;
+				font-size: 76pt;
+				text-align: center;
+				line-height: 130px;
+				vertical-align: middle;
+			}
+			
+			.icon:before {
+				position: relative;
+				top: -10px;
+				left: -10px;
+			}
+		</style>
+		<script type="text/javascript"></script>
+	</head>
+	<body>
+		<div id="uploader" class="panel panel-default">
+			<div class="panel-heading">
+				<!-- <button type="button" class="close pull-right" aria-hidden="true">&times;</button> -->
+				<h3 class="panel-title">FileManager</h3>
+			</div>
+			<nav class="navbar navbar-default navbar-static-top no-margin" role="navigation">
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<!-- Single button -->
+					<ul class="nav navbar-nav">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Nuevo <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#">Archivo</a>
+								</li>
+								<li>
+									<a href="#">Carpeta</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="#"><span class="glyphicon glyphicon-cloud-upload"></span> Subir</a>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> Acciones <span class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a id="copy" href="#">Copiar</a>
+								</li>
+								<li>
+									<a id="cut" href="#">Cortar</a>
+								</li>
+								<li>
+									<a id="paste" href="#">Pegar</a>
+								</li>
+								<li class="divider"></li>
+								<li>
+									<a id="rename" href="#">Renombrar</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+
+					<div class="navbar-form navbar-right">
+						<input type="text" class="form-control" placeholder="Filtro">
+					</div>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="#"><span class="glyphicon glyphicon-list"></span></a>
+						</li>
+						<li>
+							<a href="#"><span class="glyphicon glyphicon-th"></span></a>
+						</li>
+					</ul>
+					<!-- <form class="navbar-form navbar-left" role="search">
+					<div class="form-group">
+					<input type="text" class="form-control" placeholder="Search">
+					</div>
+					<button type="submit" class="btn btn-default">
+					Submit
+					</button>
+					</form> -->
+				</div><!-- /.navbar-collapse -->
+			</nav>
+			<div class="panel-body no-padding" id="file-body">
+				<div id="panel-sidebar" class="col-md-3 no-padding">
+					<div class="list-group no-radius no-borders no-margin scroll">
+						<a class="list-group-item no-radius no-borders">Fotos</a>
+						<a class="list-group-item no-radius no-border-sides">Cursos</a>
+						<a class="list-group-item no-radius no-border-sides">Proyectos</a>
+						<a class="list-group-item no-radius no-border-sides">Presentaciones</a>
+					</div>
+				</div>
+				<div id="panel-content" class="col-md-9 no-padding scroll">
+					<!-- <table id="details" class="table table-striped table-hover">
+					<thead>
+					<tr>
+					<th>
+					<input type="checkbox" id="selectallfiles" />
+					</th>
+					<th>Archivo</th>
+					<th>Tamaño</th>
+					<th>Tipo</th>
+					<th>Fecha</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+					<td>
+					<input type="checkbox"/>
+					</td>
+					<td><span class="glyphicon glyphicon-folder-open"></span> docs.jpg</td>
+					<td>358 KB</td>
+					<td>jpg</td>
+					<td>04/11/2013 11:22</td>
+					</tr>
+					<tr>
+					<td>
+					<input type="checkbox"/>
+					</td>
+					<td><span class="glyphicon glyphicon-folder-open"></span> img.jpg</td>
+					<td>358 KB</td>
+					<td>jpg</td>
+					<td>04/11/2013 11:22</td>
+					</tr>
+					<tr>
+					<td>
+					<input type="checkbox"/>
+					</td>
+					<td><span class="glyphicon glyphicon-picture"></span> Ieeextreme.jpg</td>
+					<td>358 KB</td>
+					<td>jpg</td>
+					<td>04/11/2013 11:22</td>
+					</tr>
+					<tr>
+					<td>
+					<input type="checkbox"/>
+					</td>
+					<td><span class="glyphicon glyphicon-picture"></span> Ieeextreme.jpg</td>
+					<td>358 KB</td>
+					<td>jpg</td>
+					<td>04/11/2013 11:22</td>
+					</tr>
+					<tr>
+					<td>
+					<input type="checkbox"/>
+					</td>
+					<td><span class="glyphicon glyphicon-picture"></span> Ieeextreme.jpg</td>
+					<td>358 KB</td>
+					<td>jpg</td>
+					<td>04/11/2013 11:22</td>
+					</tr>
+					<tr>
+					<td>
+					<input type="checkbox"/>
+					</td>
+					<td><span class="glyphicon glyphicon-picture"></span> Ieeextreme.jpg</td>
+					<td>358 KB</td>
+					<td>jpg</td>
+					<td>04/11/2013 11:22</td>
+					</tr>
+					<tr>
+					<td>
+					<input type="checkbox"/>
+					</td>
+					<td><span class="glyphicon glyphicon-picture"></span> Ieeextreme.jpg</td>
+					<td>358 KB</td>
+					<td>jpg</td>
+					<td>04/11/2013 11:22</td>
+					</tr>
+					<tr>
+					<td>
+					<input type="checkbox"/>
+					</td>
+					<td><span class="glyphicon glyphicon-file"></span> Presentación.ppt</td>
+					<td>358 KB</td>
+					<td>jpg</td>
+					<td>04/11/2013 11:22</td>
+					</tr>
+					<tr>
+					<td>
+					<input type="checkbox"/>
+					</td>
+					<td><span class="glyphicon glyphicon-file"></span> Presentación.ppt</td>
+					<td>358 KB</td>
+					<td>jpg</td>
+					<td>04/11/2013 11:22</td>
+					</tr>
+					<tr>
+					<td>
+					<input type="checkbox"/>
+					</td>
+					<td><span class="glyphicon glyphicon-file"></span> Presentación.ppt</td>
+					<td>358 KB</td>
+					<td>jpg</td>
+					<td>04/11/2013 11:22</td>
+					</tr>
+					<tr>
+					<td>
+					<input type="checkbox"/>
+					</td>
+					<td><span class="glyphicon glyphicon-file"></span> Presentación.ppt</td>
+					<td>358 KB</td>
+					<td>jpg</td>
+					<td>04/11/2013 11:22</td>
+					</tr>
+					<tr>
+					<td>
+					<input type="checkbox"/>
+					</td>
+					<td><span class="glyphicon glyphicon-file"></span> Presentación.ppt</td>
+					<td>358 KB</td>
+					<td>jpg</td>
+					<td>04/11/2013 11:22</td>
+					</tr>
+					<tr>
+					<td>
+					<input type="checkbox"/>
+					</td>
+					<td><span class="glyphicon glyphicon-file"></span> Presentación.ppt</td>
+					<td>358 KB</td>
+					<td>jpg</td>
+					<td>04/11/2013 11:22</td>
+					</tr>
+					</tbody>
+
+					</table> -->
+					<ul id="items">
+						<li><span class="icon glyphicon glyphicon-folder-open img-thumbnail"></span>
+							<span class="title">Ieeextreme
+								<input class="pull-right" type="checkbox"/>
+							</span>
+						</li>
+						<li><img src="img/pic.jpg" class="img-thumbnail">
+							<span class="title">Ieeextreme
+								<input class="pull-right" type="checkbox"/>
+							</span>
+						</li>
+						<li><img src="img/pic.jpg" class="img-thumbnail">
+							<span class="title">Ieeextreme
+								<input class="pull-right" type="checkbox"/>
+							</span>
+						</li>
+						<li><img src="img/pic.jpg" class="img-thumbnail">
+							<span class="title">Ieeextreme
+								<input class="pull-right" type="checkbox"/>
+							</span>
+						</li>
+						<li><img src="img/pic.jpg" class="img-thumbnail">
+							<span class="title">Ieeextreme
+								<input class="pull-right" type="checkbox"/>
+							</span>
+						</li>
+						<li><img src="img/pic.jpg" class="img-thumbnail">
+							<span class="title">Ieeextreme
+								<input class="pull-right" type="checkbox"/>
+							</span>
+						</li>
+						<li><img src="img/pic.jpg" class="img-thumbnail">
+							<span class="title">Ieeextreme
+								<input class="pull-right" type="checkbox"/>
+							</span>
+						</li>
+						<li><img src="img/pic.jpg" class="img-thumbnail">
+							<span class="title">Ieeextreme
+								<input class="pull-right" type="checkbox"/>
+							</span>
+						</li>
+						<li><img src="img/pic.jpg" class="img-thumbnail">
+							<span class="title">Ieeextreme
+								<input class="pull-right" type="checkbox"/>
+							</span>
+						</li>
+						<li><img src="img/pic.jpg" class="img-thumbnail">
+							<span class="title">Ieeextreme
+								<input class="pull-right" type="checkbox"/>
+							</span>
+						</li>
+						<li><img src="img/pic.jpg" class="img-thumbnail">
+							<span class="title">Ieeextreme
+								<input class="pull-right" type="checkbox"/>
+							</span>
+						</li>
+						<li><img src="img/pic.jpg" class="img-thumbnail">
+							<span class="title">Ieeextreme
+								<input class="pull-right" type="checkbox"/>
+							</span>
+						</li>
+						<li><img src="img/pic.jpg" class="img-thumbnail">
+							<span class="title">Ieeextreme
+								<input class="pull-right" type="checkbox"/>
+							</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		<div id="renamebox" class="panel panel-default">
+				<div class="panel-heading">
+					<button type="button" class="close pull-right" aria-hidden="true">
+						&times;
+					</button>
+					<h3 class="panel-title">Renombrar</h3>
+				</div>
+				<div class="panel-body">
+					<form class="form-inline no-margin" role="form">
+						<div class="form-group">
+							<label for="filename">Nombre</label>
+							<input type="text" class="form-control" id="filename" placeholder="img">
+						</div>
+					</form>
+				</div>
+				<div class="panel-footer">
+					<a class="btn btn-danger btn-sm pull-right">Cancelar</a>
+					<a class="btn btn-success btn-sm pull-right">Aceptar</a>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
+		<div id="mkdir" class="panel panel-default">
+				<div class="panel-heading">
+					<button type="button" class="close pull-right" aria-hidden="true">
+						&times;
+					</button>
+					<h3 class="panel-title">Crear carpeta</h3>
+				</div>
+				<div class="panel-body">
+					<form class="form-inline no-margin" role="form">
+						<div class="form-group">
+							<label for="filename">Nombre</label>
+							<input type="text" class="form-control" id="filename" placeholder="">
+						</div>
+					</form>
+				</div>
+				<div class="panel-footer">
+					<a class="btn btn-danger btn-sm pull-right">Cancelar</a>
+					<a class="btn btn-success btn-sm pull-right">Aceptar</a>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
+		<!-- <div id="uploadbox" class="panel panel-default">
+				<div class="panel-heading">
+					<button type="button" class="close pull-right" aria-hidden="true">
+						&times;
+					</button>
+					<h3 class="panel-title">Subir archivos</h3>
+				</div>
+				<div class="panel-body">
+					<form class="form-inline no-margin" role="form">
+						<div class="form-group">
+							<label for="filename">Nombre</label>
+							<input type="text" class="form-control" id="filename" placeholder="">
+						</div>
+					</form>
+				</div>
+				<div class="panel-footer">
+					<a class="btn btn-danger btn-sm pull-right">Cancelar</a>
+					<a class="btn btn-success btn-sm pull-right">Aceptar</a>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div> -->
+	</body>
+</html>
